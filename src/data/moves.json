@@ -1,0 +1,12 @@
+[
+  {
+    "id": 1,
+    "name": "tackle",
+    "accuracy": 100,
+    "pp": 35,
+    "power": 50,
+    "class": "physical",
+    "effectChange": null,
+    "type": "normal"
+  }
+]

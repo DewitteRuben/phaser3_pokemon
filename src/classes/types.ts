@@ -18,12 +18,30 @@ export interface IMove {
   accuracy: number;
   pp: number;
   power: number;
-  class: MoveClass;
+  damageClass: MoveClass;
 }
 
 export enum MoveClass {
-  SPECIAL,
-  PHYSICAL
+  SPECIAL = "special",
+  PHYSICAL = "physical"
+}
+
+export enum TypeEnum {
+  NORMAL = "normal",
+  FIRE = "fire",
+  WATER = "water",
+  ELECTRIC = "electric",
+  GRASS = "grass",
+  ICE = "ice",
+  FIGHTING = "fighting",
+  POISON = "poison",
+  GROUND = "ground",
+  FLYING = "flying",
+  PSYCHIC = "psychic",
+  BUG = "bug",
+  ROCK = "rock",
+  GHOST = "ghost",
+  DRAGON = "dragon"
 }
 
 export enum StatEnum {

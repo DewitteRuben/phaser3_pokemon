@@ -27,7 +27,24 @@ export class Pokemon implements IPokemon {
       .reduce((prev: number, cur: number) => prev + cur, 0);
   }
 
-  public learn(newMove: IMove): void {}
+  public learn(newMove: IMove): void {
+    const hasStat: boolean = this.moves.some((move: IMove) => move.name === newMove.name);
+    if (hasStat) {
+      throw new Error(`The Pokemon already has the ${newMove.name} move.`);
+    }
+
+    if (this.moves.length + 1 === 4) {
+      throw new Error("A pokemon can only learn 4 moves in total.");
+    }
+
+    this.moves.push(newMove);
+  }
+
+  public learnMultiple(...newMoves: IMove[]) {
+    newMoves.forEach((move: IMove) => {
+      this.learn(move);
+    });
+  }
 
   public setStat(newStat: IStat): void {
     const hasStat: boolean = this.stats.some((stat: IStat) => stat.name === newStat.name);
