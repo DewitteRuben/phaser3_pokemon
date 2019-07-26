@@ -1,4 +1,4 @@
-import { IMove, MoveClass, TypeEnum } from "./types";
+import { IMove, MoveClass, TypeEnum, Constants } from "./types";
 
 export class Move implements IMove {
   name: string;
@@ -16,7 +16,7 @@ export class Move implements IMove {
     damageClass: MoveClass,
     type: TypeEnum
   ) {
-    if (accuracy > 100) {
+    if (accuracy > Constants.MAX_ACCURACY) {
       throw new Error("Accuracy cannot exceed 100%");
     }
 

@@ -33,7 +33,7 @@ export class Pokemon implements IPokemon {
       throw new Error(`The Pokemon already has the ${newMove.name} move.`);
     }
 
-    if (this.moves.length + 1 === 4) {
+    if (this.moves.length + 1 === Constants.MAX_MOVES) {
       throw new Error("A pokemon can only learn 4 moves in total.");
     }
 

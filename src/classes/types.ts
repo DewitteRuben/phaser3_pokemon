@@ -56,5 +56,7 @@ export enum StatEnum {
 export const Constants = {
   MAX_IV: 31,
   MAX_EV: 252,
-  MAX_TOTAL_EV: 508
+  MAX_TOTAL_EV: 508,
+  MAX_MOVES: 4,
+  MAX_ACCURACY: 100
 };
