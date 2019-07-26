@@ -1,0 +1,12 @@
+{
+  "zIndexes": {
+    "abovePlayer": 10,
+    "ui": 100,
+    "text": 101
+  },
+  "text": {
+    "fontFamily": "Consolas",
+    "fontSize": "11px",
+    "color": "black"
+  }
+}
