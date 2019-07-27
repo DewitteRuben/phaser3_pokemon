@@ -1,8 +1,8 @@
 import * as pokemon from "../data/pokemon.json";
-import { Stat } from "./Stat.js";
-import { StatEnum, TypeEnum } from "./types.js";
-import { Pokemon } from "./Pokemon.js";
-import { MoveFactory } from "./MoveFactory.js";
+import { Stat } from "./Stat";
+import { StatEnum, TypeEnum } from "./types";
+import { Pokemon } from "./Pokemon";
+import { MoveFactory } from "./MoveFactory";
 
 export class PokemonFactory {
   static create(name: string, level: number, gender?: boolean) {
@@ -21,7 +21,9 @@ export class PokemonFactory {
 
     pokemon.setStats(hp, att, def, spatk, spdef, spd);
     pokemon.learn(tackle);
-    pokemon.setTypes(types);
+    types.forEach(type => {
+      pokemon.addType(type);
+    });
 
     return pokemon;
   }

@@ -2,8 +2,8 @@ import { StatEnum, IPokemon, IMove, IStat, Constants, TypeEnum } from "./types";
 
 export class Pokemon implements IPokemon {
   currentHP: number;
-  types: TypeEnum[];
-  moves: IMove[];
+  types: TypeEnum[] = [];
+  moves: IMove[] = [];
   level: number = 1;
   name: string;
   gender: boolean = true;
@@ -74,12 +74,11 @@ export class Pokemon implements IPokemon {
       );
     }
 
+    this.stats.push(newStat);
     // Set current HP
     if (newStat.name === StatEnum.HP) {
       this.currentHP = this.getStatLevel(StatEnum.HP);
     }
-
-    this.stats.push(newStat);
   }
 
   public setStats(...stats: IStat[]) {

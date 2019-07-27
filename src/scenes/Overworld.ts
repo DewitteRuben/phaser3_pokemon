@@ -7,6 +7,9 @@ import { pokeballSprite, menuSprite } from "../sprites";
 import { Scene } from "phaser";
 import { owPokeball } from "../objects/interactable/misc";
 import { Menu } from "../classes/Menu";
+import { BattleField } from "../classes/BattleField";
+import { PokemonFactory } from "../classes/PokemonFactory";
+import { BattleManager } from "../classes/BattleManager";
 
 /**
  * @author       Digitsensitive <digit.sensitivee@gmail.com>
@@ -31,6 +34,9 @@ export class Overworld extends Phaser.Scene {
 
   private debugText: Phaser.GameObjects.Text;
 
+  private battleField: BattleField;
+  private battleManager: BattleManager;
+
   constructor() {
     super({
       key: "Overworld"
@@ -39,6 +45,11 @@ export class Overworld extends Phaser.Scene {
     this.dialogHandler = new DialogHandler(this);
     this.menu = new Menu(menuSprite);
     this.interactables.push(owPokeball);
+    const bulba1 = PokemonFactory.create("bulbasaur", 100);
+    const bulba2 = PokemonFactory.create("bulbasaur", 100);
+
+    this.battleField = new BattleField(bulba1, bulba2);
+    this.battleManager = new BattleManager(this.battleField);
   }
 
   preload(): void {
@@ -87,7 +98,7 @@ export class Overworld extends Phaser.Scene {
       this.map.heightInPixels
     );
 
-    this.inputHandler = new InputHandler(this, this.player, this.dialogHandler, this.menu);
+    this.inputHandler = new InputHandler(this, this.player, this.dialogHandler, this.menu, this.battleManager);
 
     // debug coords
     this.debugText = this.add.text(0, 0, "x: 0, y:0", { color: "black" });
@@ -116,5 +127,7 @@ export class Overworld extends Phaser.Scene {
         3
       )}`
     );
+
+    this.battleManager.update();
   }
 }

@@ -4,6 +4,8 @@ import { PLAYER_SPRITE_FRAME, dialogBoxSprite } from "../sprites";
 import { DialogHandler } from "../dialog/DialogHandler";
 import { Interactable } from "../classes/Interactable";
 import { Menu } from "../classes/Menu";
+import { BattleManager } from "../classes/BattleManager";
+import { MoveFactory } from "../classes/MoveFactory";
 
 export class InputHandler {
   private scene: Phaser.Scene;
@@ -11,25 +13,35 @@ export class InputHandler {
   private cursors: Phaser.Types.Input.Keyboard.CursorKeys;
   private dialogHandler: DialogHandler;
   private menu: Menu;
+  private battleManager: BattleManager;
 
   private wKey: Phaser.Input.Keyboard.Key;
   private xKey: Phaser.Input.Keyboard.Key;
+  private aKey: Phaser.Input.Keyboard.Key;
   private backspaceKey: Phaser.Input.Keyboard.Key;
   private downKey: Phaser.Input.Keyboard.Key;
   private upKey: Phaser.Input.Keyboard.Key;
 
-  constructor(scene: Phaser.Scene, player: Player, dialogHandler: DialogHandler, menu: Menu) {
+  constructor(
+    scene: Phaser.Scene,
+    player: Player,
+    dialogHandler: DialogHandler,
+    menu: Menu,
+    battleManager: BattleManager
+  ) {
     this.scene = scene;
     this.player = player;
     this.cursors = scene.input.keyboard.createCursorKeys();
     this.dialogHandler = dialogHandler;
     this.menu = menu;
+    this.battleManager = battleManager;
     this.setup();
   }
 
   setup(): void {
     this.wKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
     this.xKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X);
+    this.aKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
     this.backspaceKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.BACKSPACE);
     this.upKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
     this.downKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
@@ -38,6 +50,9 @@ export class InputHandler {
   handleOverallInput(): void {
     if (Phaser.Input.Keyboard.JustDown(this.backspaceKey)) {
       this.menu.toggleSprite(!this.menu.isActive());
+    }
+    if (Phaser.Input.Keyboard.JustDown(this.aKey)) {
+      this.battleManager.attack(MoveFactory.create("tackle"));
     }
   }
 

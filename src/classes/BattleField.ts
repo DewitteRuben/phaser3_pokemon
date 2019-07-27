@@ -22,8 +22,13 @@ export class BattleField implements IBattleField {
     this.axis.updateCurrentHp(this.calculateDamage(move, this.ally, this.axis));
   }
 
-  public axisAttack(move: IMove) {
-    this.ally.updateCurrentHp(this.calculateDamage(move, this.axis, this.ally));
+  public axisAttack() {
+    this.ally.updateCurrentHp(this.calculateDamage(this.AIPickMove(), this.axis, this.ally));
+  }
+
+  // temp solution since only have one move just use that one
+  private AIPickMove() {
+    return this.axis.moves[0];
   }
 
   private getADModifier(pokemon: Pokemon, move: IMove) {
@@ -49,7 +54,6 @@ export class BattleField implements IBattleField {
 
   private calculateTypeModifier(move: IMove, def: Pokemon): number {
     const effectivenessArray = typeEffectivenessTable[types.indexOf(move.type)];
-
     return def.types.reduce((previousValue: number, currentValue: TypeEnum) => {
       return previousValue * effectivenessArray[types.indexOf(currentValue)];
     }, 1);

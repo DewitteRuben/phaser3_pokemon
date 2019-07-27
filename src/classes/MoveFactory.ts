@@ -1,6 +1,6 @@
 import * as moves from "../data/moves.json";
-import { Move } from "./Move.js";
-import { MoveClass, TypeEnum } from "./types.js";
+import { Move } from "./Move";
+import { MoveClass, TypeEnum } from "./types";
 
 export class MoveFactory {
   public static create(name: string) {
