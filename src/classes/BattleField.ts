@@ -19,11 +19,15 @@ export class BattleField implements IBattleField {
   }
 
   public allyAttack(move: IMove) {
-    this.axis.updateCurrentHp(this.calculateDamage(move, this.ally, this.axis));
+    const damage = this.calculateDamage(move, this.ally, this.axis);
+    this.axis.updateCurrentHp(Math.floor(damage));
+    return damage;
   }
 
   public axisAttack() {
-    this.ally.updateCurrentHp(this.calculateDamage(this.AIPickMove(), this.axis, this.ally));
+    const damage = this.calculateDamage(this.AIPickMove(), this.axis, this.ally);
+    this.ally.updateCurrentHp(Math.floor(damage));
+    return damage;
   }
 
   // temp solution since only have one move just use that one
@@ -63,10 +67,10 @@ export class BattleField implements IBattleField {
     const offAttack = this.getADModifier(off, move);
     const defDefense = this.getADModifier(def, move);
 
-    const numerator = 2 * (off.level / 5) + (2 * move.power * offAttack) / defDefense;
+    const numerator = ((2 * (off.level / 5) + 2) * move.power * offAttack) / defDefense;
     const denominator = 50;
     const modifier = this.calculateDamageModifier(move, off, def);
-
-    return (numerator / denominator) * modifier;
+    
+    return (numerator / denominator + 2) * modifier;
   }
 }

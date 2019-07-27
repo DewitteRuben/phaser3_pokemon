@@ -4,7 +4,7 @@
     "name": "tackle",
     "accuracy": 100,
     "pp": 35,
-    "power": 50,
+    "power": 40,
     "class": "PHYSICAL",
     "effectChange": null,
     "type": "NORMAL"

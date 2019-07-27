@@ -28,14 +28,12 @@ export class BattleManager {
   }
 
   update() {
-    console.log("allie", this.battleField.ally.currentHP, "axis", this.battleField.axis.currentHP);
-
     if (this.state === STATE.ATTACKING) {
       // playing is now attacking
       // write text about attacking
 
       // actual attack
-      this.battleField.allyAttack(this.selectedMove);
+      const allyDmgDealt = this.battleField.allyAttack(this.selectedMove);
 
       // check if pokemon fainted
       if (this.battleField.axis.fainted) {
@@ -50,7 +48,7 @@ export class BattleManager {
       // write text about attacking
 
       // actual attack
-      this.battleField.axisAttack();
+      const axisDmgDealt = this.battleField.axisAttack();
 
       // check if pokemon fainted
       if (this.battleField.ally.fainted) {
