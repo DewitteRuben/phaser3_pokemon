@@ -1,6 +1,6 @@
 import * as pokemon from "../data/pokemon.json";
 import { Stat } from "./Stat.js";
-import { StatEnum } from "./types.js";
+import { StatEnum, TypeEnum } from "./types.js";
 import { Pokemon } from "./Pokemon.js";
 import { MoveFactory } from "./MoveFactory.js";
 
@@ -17,9 +17,12 @@ export class PokemonFactory {
     const spd = new Stat(StatEnum.SPEED, pokeObj.stats[StatEnum.SPEED], 0, 0);
     const tackle = MoveFactory.create("tackle");
 
+    const types: TypeEnum[] = pokeObj.type.map(type => TypeEnum[type]);
+
     pokemon.setStats(hp, att, def, spatk, spdef, spd);
     pokemon.learn(tackle);
-    
+    pokemon.setTypes(types);
+
     return pokemon;
   }
 

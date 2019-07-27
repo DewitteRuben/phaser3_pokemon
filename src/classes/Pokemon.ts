@@ -1,11 +1,14 @@
-import { StatEnum, IPokemon, IMove, IStat, Constants } from "./types";
+import { StatEnum, IPokemon, IMove, IStat, Constants, TypeEnum } from "./types";
 
 export class Pokemon implements IPokemon {
+  currentHP: number;
+  types: TypeEnum[];
   moves: IMove[];
   level: number = 1;
   name: string;
   gender: boolean = true;
   stats: IStat[] = [];
+  fainted: boolean = false;
   constructor(name: string, level: number = 1, gender: boolean = true) {
     this.name = name;
     this.gender = gender;
@@ -71,6 +74,11 @@ export class Pokemon implements IPokemon {
       );
     }
 
+    // Set current HP
+    if (newStat.name === StatEnum.HP) {
+      this.currentHP = this.getStatLevel(StatEnum.HP);
+    }
+
     this.stats.push(newStat);
   }
 
@@ -88,12 +96,49 @@ export class Pokemon implements IPokemon {
     return stat;
   }
 
+  public updateCurrentHp(modifier: number, gain?: boolean) {
+    if (gain) {
+      this.currentHP += modifier;
+    } else {
+      if (this.currentHP - modifier <= 0) {
+        this.fainted = true;
+      }
+      this.currentHP -= modifier;
+    }
+  }
+
+  public addType(type: TypeEnum) {
+    if (this.types.length + 1 === 3) {
+      throw new Error("A Pokemon can have a maximum of 2 types");
+    }
+
+    this.types.push(type);
+  }
+
+  public setTypes(...types: TypeEnum[]) {
+    types.forEach(type => {
+      this.addType(type);
+    });
+  }
+
+  public getBaseStatLevel(name: StatEnum) {
+    const stat: IStat = this.getStat(name);
+    if (!stat) {
+      return -1;
+    }
+    return stat.base;
+  }
+
+  public hasType(rType: TypeEnum) {
+    return this.types.filter(type => type === rType).length > 0;
+  }
+
   public getStatLevel(name: StatEnum): number {
     const stat: IStat = this.getStat(name);
     if (!stat) {
       return -1;
     }
-    return calculateStatLevel(stat.base, stat.iv, stat.ev, this.level, name === "hp");
+    return calculateStatLevel(stat.base, stat.iv, stat.ev, this.level, name === StatEnum.HP);
   }
 }
 function calculateStatLevel(

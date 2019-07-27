@@ -2,6 +2,7 @@
   {
     "id": 1,
     "name": "bulbasaur",
+    "type": ["grass"],
     "stats": {
       "hp": 45,
       "speed": 45,
