@@ -100,9 +100,11 @@ export class Pokemon implements IPokemon {
       this.currentHP += modifier;
     } else {
       if (this.currentHP - modifier <= 0) {
+        this.currentHP = 0;
         this.fainted = true;
+      } else {
+        this.currentHP -= modifier;
       }
-      this.currentHP -= modifier;
     }
   }
 

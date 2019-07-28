@@ -3,6 +3,8 @@ import { Animation, playerDown, playerLeft, playerRight, playerUp } from "../ani
 import { playerSheet, viewSprite } from "../sprites";
 import { Sprite } from "./Sprite";
 import { Pokemon } from "./Pokemon";
+import { PokemonFactory } from "./PokemonFactory";
+import { IPokemon } from "./types";
 
 export class Player {
   public spriteSheet: SpriteSheet = playerSheet;
@@ -15,7 +17,7 @@ export class Player {
   public static FAST_SPEED: number = 125;
   public static VIEW_RADIUS_OFFSET = 9;
 
-  public pokemon: Set<Pokemon> = new Set([new Pokemon("Bulbasaur", 1)]);
+  public pokemon: Pokemon[] = [PokemonFactory.create("bulbasaur", 100)];
 
   public viewRadius: Sprite = viewSprite;
 
@@ -74,5 +76,12 @@ export class Player {
   normalize(scale: number): void {
     const body = this.spriteSheet.sprite.body as Phaser.Physics.Arcade.Body;
     body.velocity.normalize().scale(scale);
+  }
+
+  catch(pokemon: Pokemon) {
+    if (this.pokemon.length + 1 > 6) {
+      throw new Error("A Player can only have a maximum of 6 Pokemon in his party.");
+    }
+    this.pokemon.push(pokemon);
   }
 }

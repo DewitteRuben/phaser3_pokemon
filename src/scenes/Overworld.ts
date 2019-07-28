@@ -48,7 +48,9 @@ export class Overworld extends Phaser.Scene {
     const bulba1 = PokemonFactory.create("bulbasaur", 100);
     const bulba2 = PokemonFactory.create("bulbasaur", 100);
 
-    this.battleField = new BattleField(bulba1, bulba2);
+    this.battleField = new BattleField();
+    this.battleField.setAlly(bulba1);
+    this.battleField.setAxis(bulba2);
     this.battleManager = new BattleManager(this.battleField);
   }
 
@@ -85,8 +87,7 @@ export class Overworld extends Phaser.Scene {
 
     // create all game objects
     this.interactables.forEach((interactable: Interactable) => {
-      interactable.create(this);
-      this.physics.add.collider(this.player.spriteSheet.sprite, interactable.sprite.sprite);
+      interactable.create(this, this.player);
     });
 
     this.player.loadAnimations(this);
@@ -98,7 +99,13 @@ export class Overworld extends Phaser.Scene {
       this.map.heightInPixels
     );
 
-    this.inputHandler = new InputHandler(this, this.player, this.dialogHandler, this.menu, this.battleManager);
+    this.inputHandler = new InputHandler(
+      this,
+      this.player,
+      this.dialogHandler,
+      this.menu,
+      this.battleManager
+    );
 
     // debug coords
     this.debugText = this.add.text(0, 0, "x: 0, y:0", { color: "black" });

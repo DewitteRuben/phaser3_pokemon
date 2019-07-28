@@ -5,18 +5,14 @@ import {
   StatEnum,
   typeEffectivenessTable,
   types,
-  TypeEnum
+  TypeEnum,
+  IPokemon
 } from "./types";
 import { Pokemon } from "./Pokemon";
 
 export class BattleField implements IBattleField {
   ally: Pokemon;
   axis: Pokemon;
-
-  constructor(ally: Pokemon, axis: Pokemon) {
-    this.ally = ally;
-    this.axis = axis;
-  }
 
   public allyAttack(move: IMove) {
     const damage = this.calculateDamage(move, this.ally, this.axis);
@@ -30,6 +26,13 @@ export class BattleField implements IBattleField {
     return damage;
   }
 
+  public setAlly(pokemon: Pokemon) {
+    this.ally = pokemon;
+  }
+
+  public setAxis(pokemon: Pokemon) {
+    this.axis = pokemon;
+  }
   // temp solution since only have one move just use that one
   private AIPickMove() {
     return this.axis.moves[0];
@@ -70,7 +73,7 @@ export class BattleField implements IBattleField {
     const numerator = ((2 * (off.level / 5) + 2) * move.power * offAttack) / defDefense;
     const denominator = 50;
     const modifier = this.calculateDamageModifier(move, off, def);
-    
+
     return (numerator / denominator + 2) * modifier;
   }
 }
